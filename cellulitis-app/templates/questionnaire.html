@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Kuesioner Gejala & Riwayat</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% for q in [
+                        ('q1', 'Apakah kemerahan menyebar dengan cepat (dalam 24 jam)?'),
+                        ('q2', 'Apakah ada riwayat luka, lecet, atau gigitan serangga di area tersebut?'),
+                        ('q3', 'Apakah Anda mengalami demam (>38°C) atau menggigil?'),
+                        ('q4', 'Apakah area yang memerah terasa nyeri/sakit saat disentuh?'),
+                        ('q5', 'Apakah Anda memiliki riwayat diabetes atau gangguan imun?'),
+                        ('q6', 'Apakah ada pembengkakan atau kulit terasa kencang?'),
+                        ('q7', 'Apakah kulit terasa hangat/panas dibanding area sekitar?')
+                    ] %}
+                    <div class="mb-4">
+                        <p class="fw-bold fs-5">{{ loop.index }}. {{ q[1] }}</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="{{ q[0] }}" value="yes" required>
+                            <label class="form-check-label">Ya</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="{{ q[0] }}" value="no">
+                            <label class="form-check-label">Tidak</label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Jawaban Anda dikombinasikan dengan analisis AI berbasis <strong>MobileNetV3 + GLCM</strong> 
+                        untuk menentukan tingkat risiko cellulitis.
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-check-circle me-2"></i>Lihat Hasil Analisis
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

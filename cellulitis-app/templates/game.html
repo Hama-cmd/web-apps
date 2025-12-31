@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Game Edukasi: Kenali Cellulitis!</h3>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h4>Bagian 1: Tebak Gambar</h4>
+                    <p class="text-muted">Apakah ini gejala cellulitis?</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Cellulitis_arm.JPG/800px-Cellulitis_arm.JPG" 
+                                 class="card-img-top" alt="Cellulitis" style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">Gambar A</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Eczema_hands.jpg/800px-Eczema_hands.jpg" 
+                                 class="card-img-top" alt="Eczema" style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">Gambar B</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-4">
+                    <button class="btn btn-outline-primary mx-2" onclick="checkPart1('A')">
+                        Gambar A
+                    </button>
+                    <button class="btn btn-outline-primary mx-2" onclick="checkPart1('B')">
+                        Gambar B
+                    </button>
+                </div>
+                
+                <div id="part1-feedback" class="text-center mb-4 d-none"></div>
+                
+                <hr class="my-5">
+                
+                <div class="text-center mb-4">
+                    <h4>Bagian 2: Kuis Penyakit Kulit</h4>
+                    <p class="text-muted">Pilih nama penyakit yang sesuai dengan gambar</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <img src="https://dermnetnz.org/images/impetigo-honey-coloured-crusts-2.jpg" 
+                             class="img-fluid rounded mb-3" alt="Soal 1" style="max-height: 200px; object-fit: cover;">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(1, 'A')">A. Eksim</button>
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(1, 'B')">B. Impetigo</button>
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(1, 'C')">C. Psoriasis</button>
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(1, 'D')">D. Herpes</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="https://dermnetnz.org/images/cellulitis-erythema.jpg" 
+                             class="img-fluid rounded mb-3" alt="Soal 2" style="max-height: 200px; object-fit: cover;">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(2, 'A')">A. Dermatitis Kontak</button>
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(2, 'B')">B. Selulitis</button>
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(2, 'C')">C. Folikulitis</button>
+                            <button class="btn btn-outline-secondary" onclick="checkQuiz(2, 'D')">D. Rosacea</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="quiz-result" class="text-center d-none">
+                    <h3 id="score-text" class="mb-3"></h3>
+                    <div id="badge" class="fs-4 mb-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let score = 0;
+    let totalQuestions = 3; // 1 tebak gambar + 2 kuis
+
+    function checkPart1(answer) {
+        const feedback = document.getElementById('part1-feedback');
+        if(answer === 'A') {
+            score++;
+            feedback.innerHTML = `<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Benar! Gambar A menunjukkan cellulitis dengan kemerahan menyebar.</div>`;
+        } else {
+            feedback.innerHTML = `<div class="alert alert-danger"><i class="bi bi-x-circle me-2"></i>Salah! Gambar B adalah eksim, bukan cellulitis.</div>`;
+        }
+        feedback.classList.remove('d-none');
+    }
+
+    function checkQuiz(questionNum, choice) {
+        if((questionNum === 1 && choice === 'B') || (questionNum === 2 && choice === 'B')) {
+            score++;
+        }
+        if(questionNum === 2) showResult();
+    }
+
+    function showResult() {
+        const percentage = Math.round((score / totalQuestions) * 100);
+        let badge = '';
+        if(percentage >= 80) badge = '👑 Ahli Dermatologi!';
+        else if(percentage >= 60) badge = '👍 Pintar Mengenali Gejala!';
+        else badge = '📚 Belajar Lagi Yuk!';
+        
+        document.getElementById('score-text').innerText = `Skor Anda: ${score}/${totalQuestions} (${percentage}%)`;
+        document.getElementById('badge').innerText = badge;
+        document.getElementById('quiz-result').classList.remove('d-none');
+    }
+</script>
+{% endblock %}

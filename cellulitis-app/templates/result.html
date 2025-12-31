@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white text-center">
+                <h2>Hasil Screening Cellulitis</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="text-center mb-4">
+                            <img src="{{ session['image_path'] }}" class="img-fluid rounded shadow" 
+                                 style="max-height: 300px; object-fit: cover; border: 3px solid #dbeafe;">
+                        </div>
+                        <h4 class="text-center">Data Pasien</h4>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>Nama</strong></td>
+                                <td>{{ session['name'] }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Usia</strong></td>
+                                <td>{{ session['age'] }} tahun</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jenis Kelamin</strong></td>
+                                <td>{{ session['gender'] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-center mb-4">
+                            <canvas id="riskChart" width="300" height="300"></canvas>
+                        </div>
+                        <div class="text-center">
+                            <h1 class="display-1 fw-bold text-{{ 'success' if risk_score < 30 else 'warning' if risk_score < 75 else 'danger' }}">
+                                {{ risk_score }}%
+                            </h1>
+                            <h3 class="mb-4">{{ risk_level }}</h3>
+                            
+                            <div class="alert alert-{{ 'success' if risk_score < 30 else 'warning' if risk_score < 75 else 'danger' }} mb-4">
+                                <i class="bi bi-{{ 'check-circle' if risk_score < 30 else 'exclamation-triangle' }}"></i>
+                                {% if risk_score < 30 %}
+                                Tidak ditemukan tanda cellulitis. Tetap waspada terhadap perubahan kulit.
+                                {% elif risk_score < 50 %}
+                                Ada tanda awal cellulitis. Segera periksa ke dokter untuk pemeriksaan lanjutan.
+                                {% elif risk_score < 75 %}
+                                Gejala cellulitis sedang. Diperlukan penanganan medis segera.
+                                {% else %}
+                                Gejala cellulitis parah. Segera ke UGD rumah sakit terdekat!
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="/" class="btn btn-outline-primary px-4 py-2">
+                        <i class="bi bi-house-door me-2"></i>Kembali ke Beranda
+                    </a>
+                    <a href="/screening" class="btn btn-primary px-4 py-2">
+                        <i class="bi bi-arrow-repeat me-2"></i>Screening Baru
+                    </a>
+                    <a href="/game" class="btn btn-warning px-4 py-2">
+                        <i class="bi bi-controller me-2"></i>Mainkan Game Edukasi
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-light mt-4 border">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>Disclaimer:</strong> Hasil ini merupakan screening awal dan bukan diagnosis medis. 
+            Selalu konsultasikan ke dokter untuk kepastian diagnosis dan pengobatan.
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('riskChart').getContext('2d');
+    const riskScore = {{ risk_score }};
+    
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Normal', 'Risiko Rendah', 'Risiko Sedang', 'Risiko Tinggi'],
+            datasets: [{
+                data: [
+                    riskScore < 30 ? riskScore : 30,
+                    riskScore >= 30 && riskScore < 50 ? riskScore - 30 : (riskScore < 50 ? riskScore - 30 : 0),
+                    riskScore >= 50 && riskScore < 75 ? riskScore - 50 : (riskScore < 75 ? riskScore - 50 : 0),
+                    riskScore >= 75 ? riskScore - 75 : 0
+                ],
+                backgroundColor: [
+                    '#28a745', // Hijau
+                    '#ffc107', // Kuning
+                    '#fd7e14', // Orange
+                    '#dc3545'  // Merah
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            },
+            cutout: '70%'
+        }
+    });
+});
+</script>
+{% endblock %}

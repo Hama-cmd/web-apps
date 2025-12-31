@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Tentang CelluCheck</h3>
+            </div>
+            <div class="card-body">
+                <h4>✨ Apa itu CelluCheck?</h4>
+                <p>CelluCheck adalah aplikasi web screening awal untuk mendeteksi kemungkinan cellulitis berdasarkan analisis gambar kulit dan kuesioner gejala medis. Dirancang khusus untuk edukasi masyarakat dan demo lomba teknologi kesehatan.</p>
+                
+                <h4>⚙️ Teknologi yang Digunakan</h4>
+                <ul>
+                    <li><strong>MobileNetV3</strong>: Model CNN ringan untuk prediksi penyakit kulit</li>
+                    <li><strong>GLCM (Gray-Level Co-occurrence Matrix)</strong>: Ekstraksi fitur tekstur kulit untuk deteksi pola inflamasi</li>
+                    <li><strong>Flask</strong>: Framework web Python untuk backend</li>
+                    <li><strong>Bootstrap</strong>: UI/UX responsif dan modern</li>
+                </ul>
+                
+                <h4>⚠️ Disclaimer Penting</h4>
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Hasil screening ini <strong>bukan diagnosis medis</strong>. Aplikasi ini bertujuan untuk edukasi dan awareness. 
+                    Jika Anda mengalami gejala serius, segera hubungi dokter atau ke UGD rumah sakit terdekat.
+                </div>
+                
+                <h4>🎓 Untuk Lomba</h4>
+                <p>Aplikasi ini dirancang sebagai solusi inovatif untuk membantu masyarakat awam memahami risiko cellulitis sejak dini melalui teknologi AI dan game edukasi. Cocok untuk demo lomba karena:</p>
+                <ul>
+                    <li>UI/UX menarik dan profesional</li>
+                    <li>Integrasi AI (simulasi MobileNetV3 + GLCM)</li>
+                    <li>Fitur game edukasi interaktif</li>
+                    <li>Database lokal (SQLite) untuk menyimpan hasil</li>
+                </ul>
+                
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-primary">
+                        <i class="bi bi-house-door me-2"></i>Kembali ke Beranda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

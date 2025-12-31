@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-5">
+                <i class="bi bi-heart-pulse-fill text-primary" style="font-size: 5rem;"></i>
+                <h1 class="mt-3 fw-bold">CelluCheck</h1>
+                <p class="lead mt-3">Screening Cepat Cellulitis Menggunakan AI & Kuesioner Medis</p>
+                <p class="text-muted">Aplikasi ini membantu Anda memahami risiko cellulitis berdasarkan analisis gambar dan gejala.</p>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                    <a href="/screening" class="btn btn-primary px-4 py-2">
+                        <i class="bi bi-camera me-2"></i> Mulai Screening
+                    </a>
+                    <a href="/game" class="btn btn-outline-primary px-4 py-2">
+                        <i class="bi bi-controller me-2"></i> Mainkan Game
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-camera-video text-primary fs-2 mb-3"></i>
+                        <h5>Analisis Gambar</h5>
+                        <p class="text-muted">Gunakan kamera atau upload gambar kulit untuk analisis awal.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-clipboard-check text-primary fs-2 mb-3"></i>
+                        <h5>Kuesioner Medis</h5>
+                        <p class="text-muted">Jawab 7 pertanyaan untuk meningkatkan akurasi hasil.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-trophy text-primary fs-2 mb-3"></i>
+                        <h5>Game Edukasi</h5>
+                        <p class="text-muted">Belajar mengenali gejala penyakit kulit sambil bermain!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-4">
+            <i class="bi bi-info-circle me-2"></i>
+            Hasil screening ini hanya untuk edukasi dan bukan pengganti diagnosis dokter.
+        </div>
+    </div>
+</div>
+{% endblock %}
